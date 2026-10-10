@@ -1,0 +1,50 @@
+function parse(userAgent) {
+    const ua = userAgent.toLowerCase();
+    
+    // Detect OS
+    let os = 'Unknown';
+    if (ua.includes('windows')) os = 'Windows';
+    else if (ua.includes('mac')) os = 'macOS';
+    else if (ua.includes('linux')) os = 'Linux';
+    else if (ua.includes('android')) os = 'Android';
+    else if (ua.includes('ios') || ua.includes('iphone') || ua.includes('ipad')) os = 'iOS';
+    
+    // Detect browser
+    let browser = 'Unknown';
+    if (ua.includes('chrome') && !ua.includes('edg')) browser = 'Chrome';
+    else if (ua.includes('firefox')) browser = 'Firefox';
+    else if (ua.includes('safari') && !ua.includes('chrome')) browser = 'Safari';
+    else if (ua.includes('edg')) browser = 'Edge';
+    else if (ua.includes('opera')) browser = 'Opera';
+    
+    // Detect device type
+    let type = 'Desktop';
+    if (ua.includes('mobile') || ua.includes('iphone') || ua.includes('android')) {
+        type = 'Mobile';
+    } else if (ua.includes('tablet') || ua.includes('ipad')) {
+        type = 'Tablet';
+    }
+    
+    // Detect device model (simplified)
+    let device = 'Unknown';
+    if (ua.includes('iphone')) device = 'iPhone';
+    else if (ua.includes('ipad')) device = 'iPad';
+    else if (ua.includes('samsung')) device = 'Samsung';
+    else if (ua.includes('xiaomi')) device = 'Xiaomi';
+    else if (ua.includes('oppo')) device = 'Oppo';
+    else if (ua.includes('vivo')) device = 'Vivo';
+    
+    // Get version
+    const versionMatch = ua.match(/(chrome|firefox|safari|edg|opera)\/(\d+)/);
+    const version = versionMatch ? versionMatch[2] : 'Unknown';
+    
+    return {
+        os: os,
+        browser: browser,
+        type: type,
+        device: device,
+        version: version
+    };
+}
+
+module.exports = { parse };
